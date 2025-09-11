@@ -1,0 +1,37 @@
+class Solution {
+    // Function to find all possible paths
+    public ArrayList<String> ratInMaze(int[][] maze) {
+        // code here
+        int n=maze.length;
+        int[][] vis= new int[n][n];
+        ArrayList<String> res= new ArrayList<>();
+        f(0,0,n,vis,res,"",maze); 
+        Collections.sort(res);
+        return res;
+    }
+    static void f(int r,int c,int n,int[][] vis,ArrayList<String>res, String cp,int[][] mat){
+        if(r>=n|| c>=n) return;
+        if(r==n-1&& c==n-1){
+            res.add(cp);
+            return;
+            
+        }
+        vis[r][c]=1;
+        if(r+1<n && c<n && vis[r+1][c]==0 && mat[r+1][c]==1){
+            f(r+1,c,n,vis,res,cp+"D",mat);
+        }
+        if(r<n && c+1<n && vis[r][c+1]==0 && mat[r][c+1]==1){
+            f(r,c+1,n,vis,res,cp+"R",mat);
+        }
+        if(r-1>=0 && c<n && vis[r-1][c]==0 && mat[r-1][c]==1){
+            f(r-1,c,n,vis,res,cp+"U",mat);
+            
+        }
+        if(r<n && c-1>=0 && vis[r][c-1]==0 && mat[r][c-1]==1){
+            f(r,c-1,n,vis,res,cp+"L",mat);
+        }
+        vis[r][c]=0;
+        return;
+    }
+    
+}
